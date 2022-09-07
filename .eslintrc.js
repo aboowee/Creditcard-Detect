@@ -12,7 +12,6 @@ module.exports = {
   env: {
     'browser': true,
     'node': true,
-    'chai': true,
     'mocha': true
   },
   globals: {
