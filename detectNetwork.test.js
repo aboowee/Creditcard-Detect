@@ -22,7 +22,7 @@ describe('Introduction to Mocha Tests - READ ME FIRST', function() {
 
   it('Doesn\'t throw an error, so it doesn\'t fail', function() {
     // This test doesn't really test anything at all! It will pass no matter what.
-    var even = function(num){
+    var even = function(num) {
       return num / 2 === 0;
     };
     return even(10) === true;
@@ -31,11 +31,11 @@ describe('Introduction to Mocha Tests - READ ME FIRST', function() {
   // In tests, we want to compare the expected behavior to the actual behavior.
   // A test should only fail if the expected behavior doesn't match the actual.
   it('Throws an error when expected behavior does not match actual behavior', function() {
-    var even = function(num){
+    var even = function(num) {
       return num / 2 === 0;
     };
 
-    if(even(10) !== true) {
+    if (even(10) !== true) {
       throw new Error('10 should be even!');
     }
   });
