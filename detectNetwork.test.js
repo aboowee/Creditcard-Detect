@@ -160,93 +160,59 @@ describe('Discover', function() {
 describe('Maestro', function() {
   // Write full test coverage for the Maestro card
   var should = chai.should();
-
-  for (var length = 12; length <= 19; length++) {
-    var extraTextAmount = length - 4;
-    var cardEnding = [];
-    for (var i = 0; i < extraTextAmount; i++) {
-      cardEnding.push('1');
+  var prefix = ['5018', '5020', '5038', '6304'];
+  var lengths = [12, 13, 14, 15, 16, 17, 18, 19];
+  var suffix = '1234567890123456789';
+  for (var i = 0; i < prefix.length; i++) {
+    for (var j = 0; j < lengths.length; j++) {
+      (function(prefix, length) {
+        it('has a prefix of ' + prefix + ' and a length of ' + lengths[j], function () {
+          detectNetwork(prefix + suffix.slice(0, length - prefix.length)).should.equal('Maestro');
+        });
+      }) (prefix[i], lengths[j]);
     }
-    var endingCardNumbers = cardEnding.join('');
-    it('has a prefix of 5018 and a length of ' + length.toString(), function () {
-      detectNetwork('5018' + endingCardNumbers).should.equal('Maestro');
-    });
-    it('has a prefix of 5020 and a length of ' + length.toString(), function () {
-      detectNetwork('5020' + endingCardNumbers).should.equal('Maestro');
-    });
-    it('has a prefix of 5038 and a length of ' + length.toString(), function () {
-      detectNetwork('5038' + endingCardNumbers).should.equal('Maestro');
-    });
-    it('has a prefix of 6304 and a length of ' + length.toString(), function () {
-      detectNetwork('6304' + endingCardNumbers).should.equal('Maestro');
-    });
   }
 });
 
 describe('China UnionPay', function() {
   var should = chai.should();
+  var prefix = ['6282', '6283', '6284', '6285', '6286', '6287', '6288', '624', '625', '626'];
+  var lengths = [16, 17, 18, 19];
+  var suffix = '1234567890123456789';
 
-  for (var prefix = 622126; prefix <= 622925; prefix++) {
-    for (var length = 16; length <= 19; length++) {
-      var extraTextAmount = length - prefix.toString().length;
-      var cardEnding = [];
-      for (var i = 0; i < extraTextAmount; i++) {
-        cardEnding.push('1');
-      }
-      var endingCardNumbers = cardEnding.join('');
-      it('has a prefix of ' + prefix + ' and a length of ' + length.toString(), function () {
-        detectNetwork(prefix.toString() + endingCardNumbers).should.equal('China UnionPay');
-      });
+  var chinaPrefix = function() {
+    for (var h = 622126; h <= 622925; h++) {
+      prefix.push(h.toString());
     }
-  }
-  for (var prefix = 624; prefix <= 626; prefix++) {
-    for (var length = 16; length <= 19; length++) {
-      var extraTextAmount = length - prefix.toString().length;
-      var cardEnding = [];
-      for (var i = 0; i < extraTextAmount; i++) {
-        cardEnding.push('1');
-      }
-      var endingCardNumbers = cardEnding.join('');
-      it('has a prefix of ' + prefix + ' and a length of ' + length.toString(), function () {
-        detectNetwork(prefix.toString() + endingCardNumbers).should.equal('China UnionPay');
-      });
-    }
-  }
-  for (var prefix = 6282; prefix <= 6288; prefix++) {
-    for (var length = 16; length <= 19; length++) {
-      var extraTextAmount = length - prefix.toString().length;
-      var cardEnding = [];
-      for (var i = 0; i < extraTextAmount; i++) {
-        cardEnding.push('1');
-      }
-      var endingCardNumbers = cardEnding.join('');
-      it('has a prefix of ' + prefix + ' and a length of ' + length.toString(), function () {
-        detectNetwork(prefix.toString() + endingCardNumbers).should.equal('China UnionPay');
-      });
+  };
+  chinaPrefix();
+
+  for (var i = 0; i < prefix.length; i++) {
+    for (var j = 0; j < lengths.length; j++) {
+      (function(prefix, length) {
+        it('has a prefix of ' + prefix + ' and a length of ' + lengths[j], function () {
+          detectNetwork(prefix +
+          suffix.slice(0, length - prefix.length)).should.equal('China UnionPay');
+        });
+      }) (prefix[i], lengths[j]);
     }
   }
 });
 
+
+
 describe('Switch', function() {
-  // Write full test coverage for the Maestro card
   var should = chai.should();
   var prefix = ['4903', '4905', '4911', '4936', '564182', '633110', '6333', '6759'];
-
+  var lengths = [16, 18, 19];
+  var suffix = '1234567890123456789';
   for (var i = 0; i < prefix.length; i++) {
-    for (var length = 16; length <= 19; length++) {
-      if (length === 16 || length === 18 || length === 19) {
-        var extraTextAmount = length - prefix[i].length;
-        var cardEnding = [];
-        for (var j = 0; j < extraTextAmount; j++) {
-          cardEnding.push('1');
-        }
-        var endingCardNumbers = cardEnding.join('');
-        it('has a prefix of ' + prefix[i] + ' and a length of ' + length.toString(), function () {
-          detectNetwork(prefix[i] + endingCardNumbers).should.equal('Switch');
+    for (var j = 0; j < lengths.length; j++) {
+      (function(prefix, length) {
+        it('has a prefix of ' + prefix + ' and a length of ' + lengths[j], function () {
+          detectNetwork(prefix + suffix.slice(0, length - prefix.length)).should.equal('Switch');
         });
-      } else {
-        continue;
-      }
+      }) (prefix[i], lengths[j]);
     }
   }
 });
