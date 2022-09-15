@@ -27,10 +27,17 @@ var detectNetwork = function(cardNumber) {
     }
   }
 
-
+  for (var j = 12; j <= 19; j++) {
+    if (cardLength === j) {
+      cardLengthValid = true;
+    }
+  }
 
   if (fourPrefix === '6011' && (cardLength === 16 || cardLength === 19)) {
     return 'Discover';
+  } else if (cardLengthValid && (fourPrefix === '5018' || fourPrefix === '5020' ||
+    fourPrefix === '5038' || fourPrefix === '6304')) {
+    return 'Maestro';
   } else if (cardPrefixValid && (cardLength === 16 || cardLength === 19)) {
     return 'Discover';
   } else if ((twoPrefix === '38' || twoPrefix === '39') && cardLength === 14) {
