@@ -13,22 +13,40 @@ var detectNetwork = function(cardNumber) {
   // Note: `cardNumber` will always be a string
   // The Diner's Club network always starts with a 38 or 39 and is 14 digits long
   // The American Express network always starts with a 34 or 37 and is 15 digits long
+  var fourPrefix = cardNumber[0] + cardNumber[1] + cardNumber[2] + cardNumber[3];
+  var threePrefix = cardNumber[0] + cardNumber[1] + cardNumber[2];
   var twoPrefix = cardNumber[0] + cardNumber[1];
   var onePrefix = cardNumber[0];
   var cardLength = cardNumber.length;
-  if ((twoPrefix === '38' || twoPrefix === '39') && cardLength === 14) {
+  var cardPrefixValid = false;
+  var cardLengthValid = false;
+
+  for (var i = 644; i <= 649; i++) {
+    if (threePrefix === i.toString()) {
+      cardPrefixValid = true;
+    }
+  }
+
+
+
+  if (fourPrefix === '6011' && (cardLength === 16 || cardLength === 19)) {
+    return 'Discover';
+  } else if (cardPrefixValid && (cardLength === 16 || cardLength === 19)) {
+    return 'Discover';
+  } else if ((twoPrefix === '38' || twoPrefix === '39') && cardLength === 14) {
     return 'Diner\'s Club';
   } else if ((twoPrefix === '34' || twoPrefix === '37') && cardLength === 15) {
     return 'American Express';
   } else if ((twoPrefix === '51' || twoPrefix === '52' || twoPrefix === '53' ||
     twoPrefix === '54' || twoPrefix === '55') && cardLength === 16) {
     return 'MasterCard';
+  } else if (twoPrefix === '65' && (cardLength === 16 || cardLength === 19)) {
+    return 'Discover';
   } else if (onePrefix === '4' && (cardLength === 13 || cardLength === 16 || cardLength === 19)) {
     return 'Visa';
   } else {
     return undefined;
   }
-  // Once you've read this, go ahead and try to implement this function, then return to the console.
 };
 
 
