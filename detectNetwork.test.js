@@ -237,7 +237,7 @@ describe('Switch', function() {
       if (length === 16 || length === 18 || length === 19) {
         var extraTextAmount = length - prefix[i].length;
         var cardEnding = [];
-        for (var i = 0; i < extraTextAmount; i++) {
+        for (var j = 0; j < extraTextAmount; j++) {
           cardEnding.push('1');
         }
         var endingCardNumbers = cardEnding.join('');
