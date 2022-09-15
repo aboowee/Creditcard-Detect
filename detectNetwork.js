@@ -15,6 +15,16 @@
 
 var card = [
   {
+    name: 'China UnionPay',
+    prefix: ['6282', '6283', '6284', '6285', '6286', '6287', '6288', '624', '625', '626'],
+    lengths: [16, 17, 18, 19]
+  },
+  {
+    name: 'Switch',
+    prefix: ['564182', '633110', '6333', '6759', '4903', '4905', '4911', '4936'],
+    lengths: [16, 18, 19]
+  },
+  {
     name: 'Maestro',
     prefix: ['5018', '5020', '5038', '6304'],
     lengths: [12, 13, 14, 15, 16, 17, 18, 19]
@@ -46,6 +56,13 @@ var card = [
   }
 ];
 
+var chinaPrefix = function() {
+  for (var j = 622126; j <= 622925; j++) {
+    card[0].prefix.push(j.toString());
+  }
+};
+chinaPrefix();
+
 var detectNetwork = function(cardNumber) {
 
   var sixPrefix = cardNumber.substring(0, 6);
@@ -56,7 +73,10 @@ var detectNetwork = function(cardNumber) {
 
 
   for (var i = 0; i < card.length; i++) {
-    if (card[i].prefix.indexOf(fourPrefix) > -1 &&
+    if (card[i].prefix.indexOf(sixPrefix) > -1 &&
+        card[i].lengths.indexOf(cardNumber.length) > -1) {
+      return card[i]['name'];
+    } else if (card[i].prefix.indexOf(fourPrefix) > -1 &&
         card[i].lengths.indexOf(cardNumber.length) > -1) {
       return card[i]['name'];
     } else if (card[i].prefix.indexOf(threePrefix) > -1 &&
