@@ -230,26 +230,23 @@ describe('China UnionPay', function() {
 describe('Switch', function() {
   // Write full test coverage for the Maestro card
   var should = chai.should();
+  var prefix = ['4903', '4905', '4911', '4936', '564182', '633110', '6333', '6759'];
 
-  for (var length = 12; length <= 19; length++) {
-    var extraTextAmount = length - 4;
-    var cardEnding = [];
-    for (var i = 0; i < extraTextAmount; i++) {
-      cardEnding.push('1');
+  for (var i = 0; i < prefix.length; i++) {
+    for (var length = 16; length <= 19; length++) {
+      if (length === 16 || length === 18 || length === 19) {
+        var extraTextAmount = length - prefix[i].length;
+        var cardEnding = [];
+        for (var i = 0; i < extraTextAmount; i++) {
+          cardEnding.push('1');
+        }
+        var endingCardNumbers = cardEnding.join('');
+        it('has a prefix of ' + prefix[i] + ' and a length of ' + length.toString(), function () {
+          detectNetwork(prefix[i] + endingCardNumbers).should.equal('Switch');
+        });
+      } else {
+        continue;
+      }
     }
-    var endingCardNumbers = cardEnding.join('');
-    it('has a prefix of 5018 and a length of ' + length.toString(), function () {
-      detectNetwork('5018' + endingCardNumbers).should.equal('Maestro');
-    });
-    it('has a prefix of 5020 and a length of ' + length.toString(), function () {
-      detectNetwork('5020' + endingCardNumbers).should.equal('Maestro');
-    });
-    it('has a prefix of 5038 and a length of ' + length.toString(), function () {
-      detectNetwork('5038' + endingCardNumbers).should.equal('Maestro');
-    });
-    it('has a prefix of 6304 and a length of ' + length.toString(), function () {
-      detectNetwork('6304' + endingCardNumbers).should.equal('Maestro');
-    });
   }
 });
-
