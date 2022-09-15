@@ -15,6 +15,16 @@
 
 var card = [
   {
+    name: 'Maestro',
+    prefix: ['5018', '5020', '5038', '6304'],
+    lengths: [12, 13, 14, 15, 16, 17, 18, 19]
+  },
+  {
+    name: 'Discover',
+    prefix: ['6011', '644', '645', '646', '647', '648', '649', '65'],
+    lengths: [16, 19]
+  },
+  {
     name: 'Diner\'s Club',
     prefix: ['38', '39'],
     lengths: [14]
@@ -24,6 +34,16 @@ var card = [
     prefix: ['34', '37'],
     lengths: [15]
   },
+  {
+    name: 'MasterCard',
+    prefix: ['51', '52', '53', '54', '55'],
+    lengths: [16]
+  },
+  {
+    name: 'Visa',
+    prefix: ['4'],
+    lengths: [13, 16, 19]
+  }
 ];
 
 var detectNetwork = function(cardNumber) {
@@ -36,7 +56,14 @@ var detectNetwork = function(cardNumber) {
 
 
   for (var i = 0; i < card.length; i++) {
-    if (card[i].prefix.indexOf(twoPrefix) > -1 && card[i].lengths.indexOf(cardNumber.length) > -1) {
+    if (card[i].prefix.indexOf(fourPrefix) > -1 &&
+        card[i].lengths.indexOf(cardNumber.length) > -1) {
+      return card[i]['name'];
+    } else if (card[i].prefix.indexOf(threePrefix) > -1 &&
+               card[i].lengths.indexOf(cardNumber.length) > -1) {
+      return card[i]['name'];
+    } else if (card[i].prefix.indexOf(twoPrefix) > -1 &&
+               card[i].lengths.indexOf(cardNumber.length) > -1) {
       return card[i]['name'];
     } else if (card[i].prefix.indexOf(onePrefix) > -1 &&
                card[i].lengths.indexOf(cardNumber.length) > -1) {
