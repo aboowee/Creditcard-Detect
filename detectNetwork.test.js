@@ -132,28 +132,17 @@ describe('Discover', function() {
   // Tests without a function will be marked as "pending" and not run
   // Implement these tests (and others) and make them pass!
   var should = chai.should();
-
-  it('has a prefix of 6011 and a length of 16', function () {
-    detectNetwork('6011567890123456').should.equal('Discover');
-  });
-  it('has a prefix of 6011 and a length of 19', function () {
-    detectNetwork('6011567890123456789').should.equal('Discover');
-  });
-  it('has a prefix of 65 and a length of 16', function () {
-    detectNetwork('6534567890123456').should.equal('Discover');
-  });
-  it('has a prefix of 65 and a length of 19', function () {
-    detectNetwork('6534567890123456789').should.equal('Discover');
-  });
-  for (var i = 644; i <= 649; i++) {
-    it('has a prefix of ' + i + ' and a length of 16', function () {
-      detectNetwork(i.toString() + '4567890123456').should.equal('Discover');
-    });
-  }
-  for (var i = 644; i <= 649; i++) {
-    it('has a prefix of ' + i + ' and a length of 19', function () {
-      detectNetwork(i.toString() + '4567890123456789').should.equal('Discover');
-    });
+  var prefix = ['6011', '644', '645', '646', '647', '648', '649', '65'];
+  var lengths = [16, 19];
+  var suffix = '1234567890123456789';
+  for (var i = 0; i < prefix.length; i++) {
+    for (var j = 0; j < lengths.length; j++) {
+      (function(prefix, length) {
+        it('has a prefix of ' + prefix + ' and a length of ' + lengths[j], function () {
+          detectNetwork(prefix + suffix.slice(0, length - prefix.length)).should.equal('Discover');
+        });
+      }) (prefix[i], lengths[j]);
+    }
   }
 });
 
