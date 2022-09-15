@@ -160,11 +160,26 @@ describe('Discover', function() {
 describe('Maestro', function() {
   // Write full test coverage for the Maestro card
   var should = chai.should();
-  it('has a prefix of 5018 and a length of 16', function () {
-    detectNetwork('6011567890123456').should.equal('Discover');
-  });
-  it('has a prefix of 6011 and a length of 19', function () {
-    detectNetwork('6011567890123456789').should.equal('Discover');
-  });
+
+  for (var length = 12; length <= 19; length++) {
+    var extraTextAmount = length - 4;
+    var cardEnding = [];
+    for (var i = 0; i < extraTextAmount; i++) {
+      cardEnding.push('1');
+    }
+    var endingCardNumbers = cardEnding.join('');
+    it('has a prefix of 5018 and a length of ' + length.toString(), function () {
+      detectNetwork('5018' + endingCardNumbers).should.equal('Maestro');
+    });
+    it('has a prefix of 5020 and a length of ' + length.toString(), function () {
+      detectNetwork('5020' + endingCardNumbers).should.equal('Maestro');
+    });
+    it('has a prefix of 5038 and a length of ' + length.toString(), function () {
+      detectNetwork('5038' + endingCardNumbers).should.equal('Maestro');
+    });
+    it('has a prefix of 6304 and a length of ' + length.toString(), function () {
+      detectNetwork('6304' + endingCardNumbers).should.equal('Maestro');
+    });
+  }
 });
 
